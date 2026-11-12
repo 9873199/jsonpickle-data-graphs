@@ -137,7 +137,18 @@ v5.0.0
     * The unpickler was made more robust to object payloads that contained non-string
       object attribute names. (+637)
     * The test suite was made compatible with ruff 0.17.0. (+637)
-
+    * Added a ``data_only`` keyword argument to ``decode()``/``loads()`` and the
+      ``Unpickler`` constructor for safely decoding untrusted input. When enabled,
+      only JSON scalars, plain lists and string-keyed dicts are restored, while
+      ``py/id`` references still preserve shared and cyclic list/dict identity.
+      All other reserved markers (e.g. ``py/object``, ``py/type``,
+      ``py/function``, ``py/reduce``, ``py/repr``, ``py/mod``, ``py/state`` and
+      ``py/newargs``), including nested ones and ``json://``-encoded keys, raise
+      the new ``jsonpickle.DataOnlyDecodeError`` (a ``ValueError``) before any
+      class import, handler call, ``eval()`` or object hook can run. Invalid,
+      out-of-range, negative or boolean ``py/id`` values raise instead of
+      silently becoming ``None``. The default (``data_only=False``) behavior is
+      unchanged, and ``safe=True`` remains unrelated to this protection.
 v4.1.2
 ======
     * Add deprecation warnings for the pending removal of the ``safe``, ``numeric_keys``, and

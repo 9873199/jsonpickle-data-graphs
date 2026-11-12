@@ -113,7 +113,20 @@ Low Level API
 Typically this low level functionality is not needed by clients.
 
 Note that arguments like ``safe=True`` do not make it safe to load an untrusted
-jsonpickle string.
+jsonpickle string. ``safe`` only disables the legacy ``eval()``-based repr
+path; object restoration is still available.
+
+For untrusted input use ``data_only=True`` on :func:`jsonpickle.decode`
+(also exposed as :func:`jsonpickle.loads`) or construct an
+:class:`jsonpickle.unpickler.Unpickler` with ``data_only=True``. In that mode
+the output contains only JSON scalars, plain lists and string-keyed dicts,
+plus ``py/id`` references that preserve shared and cyclic list/dict identity.
+Every other reserved ``py/`` marker raises
+:class:`jsonpickle.unpickler.DataOnlyDecodeError` (a :class:`ValueError`)
+before any class import, handler call, ``eval()`` or object hook can run, so
+registered handlers and the ``classes`` argument cannot be used to bypass the
+restriction. Invalid, out-of-range, negative or boolean ``py/id`` values raise
+the same error instead of resolving to ``None``.
 
 :mod:`jsonpickle.pickler` -- Python to JSON-compatible dict
 -----------------------------------------------------------

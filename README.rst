@@ -94,6 +94,42 @@ from a security perspective.
    Safer deserialization approaches, such as reading JSON directly,
    may be more appropriate if you are processing untrusted data.
 
+Decoding untrusted data: ``data_only=True``
+-------------------------------------------
+
+When the input can come from an untrusted upload, pass ``data_only=True`` to
+:func:`jsonpickle.decode` (or build an ``Unpickler(data_only=True)``)::
+
+    >>> jsonpickle.decode(payload, data_only=True)
+
+In this mode jsonpickle never restores arbitrary Python objects. The accepted
+data format is limited to:
+
+* JSON scalars: strings, integers, floats, booleans and ``null``;
+* plain ``list`` containers;
+* plain ``dict`` containers with string keys; keys that are not reserved
+  protocol markers, including an unrelated key such as ``"py/name"``, are
+  kept verbatim;
+* ``{"py/id": n}`` references, which preserve shared and self-referential
+  lists and dicts. Reference numbers follow jsonpickle's normal traversal
+  numbering, so data encoded from plain containers round-trips with identity
+  intact.
+
+Every other reserved marker is rejected with a
+``jsonpickle.DataOnlyDecodeError`` (a ``ValueError``) *before* anything is
+restored, including ``py/object``, ``py/type``, ``py/function``,
+``py/reduce``, ``py/repr``, ``py/mod``, ``py/state``, ``py/newargs`` and the
+other object-recovery tags, whether they appear at the top level, nested
+inside a container, or behind a ``json://``-encoded key. No class is imported,
+no registered handler is invoked, and ``eval()`` is never called; the
+``classes`` argument is ignored in this mode. An invalid, out-of-range,
+negative, or boolean ``py/id`` also raises rather than silently becoming
+``None``.
+
+Note that ``safe=True`` (the default) only disables the legacy
+``eval()``-based repr path; it does not prevent object restoration and is not
+a substitute for ``data_only=True``.
+
 
 Install
 =======

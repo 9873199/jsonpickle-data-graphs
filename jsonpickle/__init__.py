@@ -21,6 +21,13 @@
    Safer deserialization approaches, such as reading the raw JSON
    directly, may be more appropriate if you are processing untrusted data.
 
+   For data made up only of JSON scalars, lists and dictionaries (including
+   shared or self-referential ones encoded with ``py/id``), decode with
+   ``jsonpickle.decode(payload, data_only=True)``. That mode never restores
+   arbitrary Python objects and rejects every other reserved ``py/`` marker,
+   so it is suitable for untrusted input. See
+   :class:`jsonpickle.unpickler.DataOnlyDecodeError`.
+
 jsonpickle can take almost any Python object and turn the object into JSON.
 Additionally, it can reconstitute the object back into Python.
 
@@ -70,10 +77,10 @@ added to JSON::
 from .backend import JSONBackend, json  # noqa: F401
 from .handlers import register, unregister  # noqa: F401
 from .pickler import Pickler, encode  # noqa: F401
-from .unpickler import Unpickler, decode  # noqa: F401
+from .unpickler import DataOnlyDecodeError, Unpickler, decode  # noqa: F401
 from .version import __version__  # noqa: F401
 
-__all__ = ("encode", "decode")  # ruff: ignore[RUF022]
+__all__ = ("encode", "decode", "DataOnlyDecodeError")  # ruff: ignore[RUF022]
 
 # register built-in handlers
 __import__("jsonpickle.handlers", level=0)

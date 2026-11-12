@@ -17,6 +17,55 @@ ClassesType: TypeAlias = type | dict[str, type] | Sequence[type] | None
 # handler for missing classes: either a policy name or a callback
 MissingHandler: TypeAlias = str | Callable[[str], Any]
 
+# Every reserved marker defined by the jsonpickle wire protocol, including
+# py/b64 and py/b85, which the regular unpickler dispatches directly and
+# which are therefore absent from tags.RESERVED. An unknown "py/"-prefixed
+# key is not a protocol marker, so it is kept as an ordinary business key;
+# the data-only path has no tag dispatch anyway, so it can never trigger
+# object restoration regardless of its name.
+_DATA_ONLY_KNOWN_TAGS: frozenset[str] = frozenset(
+    {
+        tags.B64,
+        tags.B85,
+        tags.BYTES,
+        tags.BYTEARRAY,
+        tags.DEFAULT_FACTORY,
+        tags.FUNCTION,
+        tags.ID,
+        tags.INITARGS,
+        tags.ITERATOR,
+        tags.MEMORYVIEW,
+        tags.MODULE,
+        tags.NEWARGS,
+        tags.NEWARGSEX,
+        tags.NEWOBJ,
+        tags.OBJECT,
+        tags.PROPERTY,
+        tags.REDUCE,
+        tags.REF,
+        tags.REPR,
+        tags.SEQ,
+        tags.SET,
+        tags.STATE,
+        tags.TUPLE,
+        tags.TYPE,
+    }
+)
+
+# The only reserved marker honored by data-only decoding. Every other
+# protocol marker is rejected during the validation pass, before any
+# restoration runs, so no class import, handler call, eval() or object hook
+# can be triggered by untrusted input.
+_DATA_ONLY_ALLOWED_TAGS: frozenset[str] = frozenset({tags.ID})
+
+
+class DataOnlyDecodeError(ValueError):
+    """Raised when ``data_only`` decoding meets unsupported input.
+
+    This is a :class:`ValueError`, so callers that already treat
+    ``ValueError`` as the "malformed payload" exception catch it directly.
+    """
+
 
 def decode(
     string: str,
@@ -29,6 +78,7 @@ def decode(
     on_missing: MissingHandler = "ignore",
     handle_readonly: bool = False,
     handler_context: Any = None,
+    data_only: bool = False,
 ) -> Any:
     """Convert a JSON string into a Python object.
 
@@ -81,6 +131,28 @@ def decode(
         behavior at runtime based off data. Defaults to ``None``. An example can
         be found in the examples/ directory on GitHub.
 
+    :param data_only: If set to ``True``, decode untrusted input without ever
+        restoring arbitrary Python objects. Only JSON scalars (``str``, ``int``,
+        ``float``, ``bool`` and ``None``), plain ``list`` instances and plain
+        ``dict`` instances with string keys are produced. ``py/id`` entries are
+        still resolved so that shared and self-referential lists and dicts keep
+        their identity, using jsonpickle's regular traversal numbering. Every
+        other reserved ``py/`` tag (e.g. ``py/object``, ``py/type``,
+        ``py/function``, ``py/reduce``, ``py/repr``, ``py/mod``, ``py/state``
+        and ``py/newargs``), including tags nested inside containers or hidden
+        behind ``json://``-prefixed keys, raises :class:`DataOnlyDecodeError`
+        *before* any class is imported, handler invoked or ``eval()`` called.
+        The ``classes`` argument and any registered handlers are ignored in this
+        mode. Invalid, out-of-range, negative or boolean ``py/id`` values raise
+        :class:`DataOnlyDecodeError` instead of silently becoming ``None``.
+        Defaults to ``False``, which preserves the historical behavior.
+
+        .. note::
+
+            ``safe=True`` only disables the legacy ``eval()``-based repr path;
+            it does not prevent object restoration and must not be confused
+            with ``data_only=True``.
+
     >>> decode('"my string"') == 'my string'
     True
     >>> decode('36')
@@ -101,6 +173,7 @@ def decode(
         on_missing=on_missing,
         handle_readonly=handle_readonly,
         handler_context=handler_context,
+        data_only=data_only,
     )
     if handler_context is not None:
         context.handler_context = handler_context
@@ -176,6 +249,20 @@ class _IDProxy(_Proxy):
             return self._objs[self._index]
         except IndexError:
             return None
+
+
+class _DataOnlyRef:
+    """Placeholder for a forward ``py/id`` reference during data-only decode.
+
+    Unlike :class:`_IDProxy`, an unresolved reference is never silently turned
+    into ``None``: the final sweep raises :class:`DataOnlyDecodeError` if the
+    target index does not exist once the whole graph has been rebuilt.
+    """
+
+    __slots__ = ("index",)
+
+    def __init__(self, index: int) -> None:
+        self.index = index
 
 
 def _obj_setattr(obj: Any, attr: str, proxy: _Proxy) -> None:
@@ -324,6 +411,7 @@ class Unpickler:
         on_missing: MissingHandler = "ignore",
         handle_readonly: bool = False,
         handler_context: Any = None,
+        data_only: bool = False,
     ) -> None:
         self.backend = json
         self.keys = keys
@@ -332,6 +420,9 @@ class Unpickler:
         self.handle_readonly = handle_readonly
         # Custom context passed through to custom handlers, see #452
         self.handler_context = handler_context
+        # When True, only JSON scalars/lists/dicts plus py/id references are
+        # restored; all object-restoration machinery is bypassed entirely.
+        self.data_only = data_only
 
         self.reset()
 
@@ -344,6 +435,10 @@ class Unpickler:
 
         # Extra local classes not accessible globally
         self._classes = {}
+
+        # Containers rebuilt by the data-only path, in traversal order so that
+        # py/id numbering matches the pickler's reference numbering.
+        self._data_only_objs: list[Any] = []
 
     def _swap_proxies(self) -> None:
         """Replace proxies with their corresponding instances"""
@@ -378,6 +473,10 @@ class Unpickler:
         """
         if reset:
             self.reset()
+        if self.data_only:
+            # The data-only path never touches classes or handlers, so it is
+            # safe even when `classes` is supplied with untrusted input.
+            return self._restore_data_only(obj)
         if classes:
             self.register_classes(classes)
         value = self._restore(obj)
@@ -404,6 +503,151 @@ class Unpickler:
             )
         else:
             self._classes[util.importable_name(classes)] = classes  # type: ignore[arg-type]
+
+    # ------------------------------------------------------------------
+    # data-only restoration (safe for untrusted input)
+    # ------------------------------------------------------------------
+    def _restore_data_only(self, obj: Any) -> Any:
+        """Rebuild only JSON data while preserving ``py/id`` container identity.
+
+        The graph is validated and rebuilt without importing classes, invoking
+        handlers, calling ``eval()`` or running any object-restoration hook.
+        Unsupported reserved tags raise :class:`DataOnlyDecodeError` before any
+        referenceable container is created, so a half-built object can never be
+        left behind as evidence of a "best effort" restore.
+        """
+        # Phase 1: reject every reserved tag outside of the allowed set. The
+        # whole decoded graph is walked first, which also catches tags smuggled
+        # inside nested containers or behind a json://-encoded key.
+        self._validate_data_only(obj)
+
+        # Phase 2: rebuild scalars, lists and dicts, registering containers in
+        # the same traversal order as the regular machinery so that py/id
+        # numbering matches the pickler's output.
+        rebuilt = self._data_only_build(obj)
+        # Phase 3: resolve forward references (cycles) and reject dangling
+        # ones in a single sweep over the finished graph.
+        return self._data_only_finalize(rebuilt)
+
+    def _validate_data_only(self, obj: Any) -> None:
+        """Raise DataOnlyDecodeError for any unsupported reserved tag."""
+        if type(obj) is dict:
+            for key, value in obj.items():
+                if not isinstance(key, str):
+                    # The JSON backend only produces string keys; anything else
+                    # here is not part of the accepted data format.
+                    raise DataOnlyDecodeError(
+                        "data_only decoding only supports string dictionary "
+                        f"keys, got {type(key).__name__!r}"
+                    )
+                # A json:// prefix marks an encoded non-string key whose
+                # payload is itself a jsonpickle document. Reject the prefix
+                # instead of decoding it, so the encoding cannot be used to
+                # smuggle object tags past validation.
+                if key.startswith(tags.JSON_KEY):
+                    raise DataOnlyDecodeError(
+                        "data_only decoding does not support "
+                        f"{tags.JSON_KEY!r}-encoded keys"
+                    )
+                # Reject every defined protocol marker except py/id,
+                # including ones the regular unpickler dispatches directly
+                # (py/b64, py/b85). An unknown "py/"-prefixed key is not a
+                # reserved marker and is kept as an ordinary business key.
+                if (
+                    key in _DATA_ONLY_KNOWN_TAGS
+                    and key not in _DATA_ONLY_ALLOWED_TAGS
+                ):
+                    raise DataOnlyDecodeError(
+                        "data_only decoding does not support the reserved tag "
+                        f"{key!r}; only {tags.ID!r} references are allowed"
+                    )
+                self._validate_data_only(value)
+        elif type(obj) is list:
+            for value in obj:
+                self._validate_data_only(value)
+        # JSON scalars (str/int/float/bool/None) cannot carry tags.
+
+    def _data_only_build(self, obj: Any) -> Any:
+        if type(obj) is list:
+            parent: list[Any] = []
+            self._data_only_objs.append(parent)
+            parent.extend(self._data_only_build(value) for value in obj)
+            return parent
+        if type(obj) is dict:
+            if tags.ID in obj:
+                # jsonpickle emits references as singleton {"py/id": n}
+                # dictionaries. Reject extra keys rather than silently
+                # discarding them.
+                extra = [key for key in obj if key != tags.ID]
+                if extra:
+                    raise DataOnlyDecodeError(
+                        f"{tags.ID!r} reference markers must not contain other "
+                        f"keys, found {extra!r}"
+                    )
+                return self._data_only_ref(obj[tags.ID])
+            data: dict[str, Any] = {}
+            self._data_only_objs.append(data)
+            for key, value in obj.items():
+                data[key] = self._data_only_build(value)
+            return data
+        return obj
+
+    def _data_only_ref(self, index: Any) -> _DataOnlyRef | Any:
+        # bool is a subclass of int; reject it explicitly so that True/False
+        # cannot masquerade as reference numbers.
+        if type(index) is not int:
+            raise DataOnlyDecodeError(
+                f"invalid {tags.ID!r} reference: expected a non-negative "
+                f"integer, got {type(index).__name__} ({index!r})"
+            )
+        if index < 0:
+            raise DataOnlyDecodeError(
+                f"invalid {tags.ID!r} reference: index must be non-negative, "
+                f"got {index}"
+            )
+        try:
+            return self._data_only_objs[index]
+        except IndexError:
+            # Forward reference, as produced by cycles: remember the target
+            # index and let the final sweep resolve or reject it.
+            return _DataOnlyRef(index)
+
+    def _data_only_resolve(self, ref: _DataOnlyRef) -> Any:
+        try:
+            return self._data_only_objs[ref.index]
+        except IndexError:
+            raise DataOnlyDecodeError(
+                f"invalid {tags.ID!r} reference: index {ref.index} is out of "
+                f"range; only {len(self._data_only_objs)} list/dict "
+                "containers are referenceable"
+            ) from None
+
+    def _data_only_finalize(self, root: Any) -> Any:
+        """Swap forward-reference placeholders for their real containers."""
+        if isinstance(root, _DataOnlyRef):
+            return self._data_only_resolve(root)
+
+        visited: set[int] = set()
+
+        def walk(node: Any) -> None:
+            if type(node) not in (list, dict) or id(node) in visited:
+                return
+            visited.add(id(node))
+            if type(node) is list:
+                for idx, value in enumerate(node):
+                    if isinstance(value, _DataOnlyRef):
+                        node[idx] = self._data_only_resolve(value)
+                    else:
+                        walk(value)
+            else:
+                for key, value in tuple(node.items()):
+                    if isinstance(value, _DataOnlyRef):
+                        node[key] = self._data_only_resolve(value)
+                    else:
+                        walk(value)
+
+        walk(root)
+        return root
 
     def _restore_base64(self, obj: dict[str, Any]) -> bytes:
         try:
