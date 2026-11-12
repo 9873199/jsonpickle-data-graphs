@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\jsonpickle_test.py",
+    "--basetemp",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\tmp-regression",
+    "--junitxml",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\regression.xml",
+    "--disable-warnings"
+  ],
+  "cwd": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact",
+  "PYTHONPATH": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\src;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\lib",
+  "python": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+  "exit_code": 0,
+  "seconds": 4.55,
+  "log": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\regression.log"
+}

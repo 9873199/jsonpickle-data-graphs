@@ -1,0 +1,52 @@
+REJECTED EVENTS []
+.REJECTED EVENTS []
+.RESULT Counted EVENTS ['__new__', '__setstate__']
+FRESULT Counted EVENTS ['__new__', '__setstate__']
+F
+================================== FAILURES ===================================
+_____________ test_real_class_hooks_are_not_called[True-decode0] ______________
+
+entry = <function decode at 0x00000157FADCD2D0>, legacy_context = True
+
+    @pytest.mark.parametrize('entry',[jsonpickle.decode,jsonpickle.loads])
+    @pytest.mark.parametrize('legacy_context',[False,True])
+    def test_real_class_hooks_are_not_called(entry,legacy_context):
+     Counted.events=[]
+     payload=json.dumps({'py/object':'harmless.Counted','py/state':{'value':7}})
+     kwargs={'data_only':True,'classes':{'harmless.Counted':Counted}}
+     if legacy_context:kwargs['context']=Unpickler()
+     rejected=False
+     try:
+      result=entry(payload,**kwargs)
+      print('RESULT',type(result).__name__,'EVENTS',Counted.events)
+     except ValueError:
+      rejected=True;print('REJECTED','EVENTS',Counted.events)
+>    assert rejected and Counted.events==[]
+E    assert (False)
+
+..\verification\native-context-r1\test_native_context.py:20: AssertionError
+_____________ test_real_class_hooks_are_not_called[True-decode1] ______________
+
+entry = <function decode at 0x00000157FADCD2D0>, legacy_context = True
+
+    @pytest.mark.parametrize('entry',[jsonpickle.decode,jsonpickle.loads])
+    @pytest.mark.parametrize('legacy_context',[False,True])
+    def test_real_class_hooks_are_not_called(entry,legacy_context):
+     Counted.events=[]
+     payload=json.dumps({'py/object':'harmless.Counted','py/state':{'value':7}})
+     kwargs={'data_only':True,'classes':{'harmless.Counted':Counted}}
+     if legacy_context:kwargs['context']=Unpickler()
+     rejected=False
+     try:
+      result=entry(payload,**kwargs)
+      print('RESULT',type(result).__name__,'EVENTS',Counted.events)
+     except ValueError:
+      rejected=True;print('REJECTED','EVENTS',Counted.events)
+>    assert rejected and Counted.events==[]
+E    assert (False)
+
+..\verification\native-context-r1\test_native_context.py:20: AssertionError
+=========================== short test summary info ===========================
+FAILED ..\verification\native-context-r1\test_native_context.py::test_real_class_hooks_are_not_called[True-decode0]
+FAILED ..\verification\native-context-r1\test_native_context.py::test_real_class_hooks_are_not_called[True-decode1]
+2 failed, 2 passed in 0.48s

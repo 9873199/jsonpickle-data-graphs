@@ -1,0 +1,106 @@
+FFF..
+================================== FAILURES ===================================
+____ test_decode_data_only_cannot_be_disabled_by_legacy_context[payload0] _____
+
+payload = {'nested': {'py/object': 'builtins.str'}}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001930BC00640>
+
+    @pytest.mark.parametrize('payload',[{'nested':{'py/object':'builtins.str'}},{'nested':{'py/reduce':[{'py/function':'builtins.str'},['value']]}}])
+    def test_decode_data_only_cannot_be_disabled_by_legacy_context(payload,monkeypatch):
+     import jsonpickle.unpickler as module
+     calls=[]
+     def forbidden(*args,**kwargs):calls.append('legacy_restore');raise AssertionError('legacy restoration branch reached')
+     monkeypatch.setattr(module.util,'loadclass',forbidden)
+     monkeypatch.setattr(Unpickler,'_restore_object',forbidden)
+     monkeypatch.setattr(Unpickler,'_restore_reduce',forbidden)
+     context=Unpickler()
+>    with pytest.raises(ValueError):jsonpickle.decode(json.dumps(payload),context=context,data_only=True)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+..\verification\contexts-r1\test_acceptance.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jsonpickle\unpickler.py:181: in decode
+    result = context.restore(data, reset=reset, classes=classes)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:482: in restore
+    value = self._restore(obj)
+            ^^^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:458: in _restore
+    return restore(obj)
+           ^^^^^^^^^^^^
+jsonpickle\unpickler.py:1111: in _restore_dict
+    data[k] = result = self._restore(v)
+                       ^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:458: in _restore
+    return restore(obj)
+           ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = (<jsonpickle.unpickler.Unpickler object at 0x000001930BA81010>, {'py/object': 'builtins.str'})
+kwargs = {}
+
+>   def forbidden(*args,**kwargs):calls.append('legacy_restore');raise AssertionError('legacy restoration branch reached')
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: legacy restoration branch reached
+
+..\verification\contexts-r1\test_acceptance.py:9: AssertionError
+____ test_decode_data_only_cannot_be_disabled_by_legacy_context[payload1] _____
+
+payload = {'nested': {'py/reduce': [{'py/function': 'builtins.str'}, ['value']]}}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001930BC00FC0>
+
+    @pytest.mark.parametrize('payload',[{'nested':{'py/object':'builtins.str'}},{'nested':{'py/reduce':[{'py/function':'builtins.str'},['value']]}}])
+    def test_decode_data_only_cannot_be_disabled_by_legacy_context(payload,monkeypatch):
+     import jsonpickle.unpickler as module
+     calls=[]
+     def forbidden(*args,**kwargs):calls.append('legacy_restore');raise AssertionError('legacy restoration branch reached')
+     monkeypatch.setattr(module.util,'loadclass',forbidden)
+     monkeypatch.setattr(Unpickler,'_restore_object',forbidden)
+     monkeypatch.setattr(Unpickler,'_restore_reduce',forbidden)
+     context=Unpickler()
+>    with pytest.raises(ValueError):jsonpickle.decode(json.dumps(payload),context=context,data_only=True)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+..\verification\contexts-r1\test_acceptance.py:14: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jsonpickle\unpickler.py:181: in decode
+    result = context.restore(data, reset=reset, classes=classes)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:482: in restore
+    value = self._restore(obj)
+            ^^^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:458: in _restore
+    return restore(obj)
+           ^^^^^^^^^^^^
+jsonpickle\unpickler.py:1111: in _restore_dict
+    data[k] = result = self._restore(v)
+                       ^^^^^^^^^^^^^^^^
+jsonpickle\unpickler.py:458: in _restore
+    return restore(obj)
+           ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = (<jsonpickle.unpickler.Unpickler object at 0x000001930BB960D0>, {'py/reduce': [{'py/function': 'builtins.str'}, ['value']]})
+kwargs = {}
+
+>   def forbidden(*args,**kwargs):calls.append('legacy_restore');raise AssertionError('legacy restoration branch reached')
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: legacy restoration branch reached
+
+..\verification\contexts-r1\test_acceptance.py:9: AssertionError
+__ test_direct_data_only_restore_accepts_only_documented_json_shapes[value0] __
+
+value = (1, 2)
+
+    @pytest.mark.parametrize('value',[(1,2),{1:'non-string-key'}])
+    def test_direct_data_only_restore_accepts_only_documented_json_shapes(value):
+>    with pytest.raises(ValueError):Unpickler(data_only=True).restore(value)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+E    Failed: DID NOT RAISE ValueError
+
+..\verification\contexts-r1\test_acceptance.py:19: Failed
+=========================== short test summary info ===========================
+FAILED ..\verification\contexts-r1\test_acceptance.py::test_decode_data_only_cannot_be_disabled_by_legacy_context[payload0]
+FAILED ..\verification\contexts-r1\test_acceptance.py::test_decode_data_only_cannot_be_disabled_by_legacy_context[payload1]
+FAILED ..\verification\contexts-r1\test_acceptance.py::test_direct_data_only_restore_accepts_only_documented_json_shapes[value0]
+3 failed, 2 passed in 0.62s

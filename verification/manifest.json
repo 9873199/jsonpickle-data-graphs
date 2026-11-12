@@ -1,0 +1,263 @@
+{
+  "created": "2026-11-12T18:21:50+08:00",
+  "reviewed": true,
+  "reviewer": "Codex primary agent, AI-assisted",
+  "uid": 1734,
+  "frozen_commit": "bfe379b1c7679626fac0cf675d69b5395a8f88a7",
+  "native_trajectory_sha256": "6a2621489a60935be3952cf7574c3144e91cffae9009200ec12acbf22e431059",
+  "files": [
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\freeze.json",
+      "path": "freeze.json",
+      "sha256": "6eb032a44526990a6f47df40bc0951c7bf0f9d91be83c620bd0ddb142d671de5"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\freeze-audit.json",
+      "path": "freeze-audit.json",
+      "sha256": "f7fb13812d84ece44aa3628828bfefce86df9c56fc4e40c4f5b8509c1c0483fa"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\environment-reviewed.json",
+      "path": "environment-reviewed.json",
+      "sha256": "b6097426db5f2603ed87b434230d0f4e93f144dc1347e86377ae08c86c7f77de"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\evidence-map.json",
+      "path": "evidence-map.json",
+      "sha256": "58e0684a368c56b856f69115978d9e4e8d21488f2a329962da25d5c8e07dcccc"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\model-final-answer.txt",
+      "path": "model-final-answer.txt",
+      "sha256": "ea5484a893972b68cc2e5700ee9163bfcb1a2a454554fdab352c54db3b538264"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\environment-import.stdout.log",
+      "path": "environment-import.stdout.log",
+      "sha256": "d47a2df4576113d4187d3491d93892c728960f49881ec3b5d863b4ddf5091b86"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\environment-import.stderr.log",
+      "path": "environment-import.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\environment-packages.stdout.log",
+      "path": "environment-packages.stdout.log",
+      "sha256": "a9ee74a5adcea64160bca70d66febc65499e5291371c9774b3f9428acb03097b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\environment-packages.stderr.log",
+      "path": "environment-packages.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\acceptance-command.json",
+      "path": "verification/acceptance-r1/acceptance-command.json",
+      "sha256": "a894d4c401c7b535c4d616f2d18997bb17b0e978be77972b0b8d2f5b127a81ea"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\acceptance.log",
+      "path": "verification/acceptance-r1/acceptance.log",
+      "sha256": "547fb5bc0319e53d13d40d936e580ccc95d2ff86fec92d2f4f6fccf52d74996b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\acceptance.xml",
+      "path": "verification/acceptance-r1/acceptance.xml",
+      "sha256": "2afb18c3b164d99160b1a868aff08b6b83603cbbe2b16c15705f8e9d20c3f91b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\regression-command.json",
+      "path": "verification/acceptance-r1/regression-command.json",
+      "sha256": "cdb27039cf1348bfcc9b51b6067329a43c8a593a186eeff6701dddc98409143a"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\regression.log",
+      "path": "verification/acceptance-r1/regression.log",
+      "sha256": "f42d2a1172ef801e784e89a1cd1892b43d71aec0e2f85c340b0a0baebbecae19"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\regression.xml",
+      "path": "verification/acceptance-r1/regression.xml",
+      "sha256": "b6df1986ccd22f8a0c8fa59fc50c9ff84f5bf9c74876b141bc7e4ccf0fc14bc5"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\test-results.json",
+      "path": "verification/acceptance-r1/test-results.json",
+      "sha256": "643d170561a47d09c8aff8fe6c14ae1ad58e97740a84822339b1c7a2e74a8272"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\acceptance-r1\\test_acceptance.py",
+      "path": "verification/acceptance-r1/test_acceptance.py",
+      "sha256": "c86917f6305ff56200fbb3154bd852aea2ce891c8f79fecb18d9f864e7c3d7e1"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\contexts-r1\\acceptance-command.json",
+      "path": "verification/contexts-r1/acceptance-command.json",
+      "sha256": "5122576ef76f2c026fc586b7b3be6239f082def15e54bc073dbbde03f224533e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\contexts-r1\\acceptance.log",
+      "path": "verification/contexts-r1/acceptance.log",
+      "sha256": "a801fc9d1ae152040e964a8963a7048572b043ffc6cdc86d5acdc05358c85bcc"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\contexts-r1\\acceptance.xml",
+      "path": "verification/contexts-r1/acceptance.xml",
+      "sha256": "4bc5c30b3b18aee9aa6dcd2665b396a31b80f9f768d46acff464abc99e096ada"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\contexts-r1\\test-results.json",
+      "path": "verification/contexts-r1/test-results.json",
+      "sha256": "1714b0d247869c4d543cd9e80e9538309770ea635fc4c998fb312b87cfa9ea2e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\contexts-r1\\test_acceptance.py",
+      "path": "verification/contexts-r1/test_acceptance.py",
+      "sha256": "3922e49cc71eb878ea63851334902687feb38fb2f491b6691ece0d9476280b9f"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\final-subset-r1\\command-command.json",
+      "path": "verification/final-subset-r1/command-command.json",
+      "sha256": "a26912ce8ee1706788d5421abfc48a259c9c0dfadea002fd632589c9e23a62a9"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\final-subset-r1\\command.stderr.log",
+      "path": "verification/final-subset-r1/command.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\final-subset-r1\\command.stdout.log",
+      "path": "verification/final-subset-r1/command.stdout.log",
+      "sha256": "07a8e550417fed894ff5edf0ee15433abf66acabd82b0b26005a0fad0f4225d0"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\final-subset-r1\\results.xml",
+      "path": "verification/final-subset-r1/results.xml",
+      "sha256": "6f32fe983fd7e5e17bcd81575d2685173b4dbf90f6ae63e59b2441227650ca6e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\fixture-provenance-r1\\acceptance-data-graphs-r2.py",
+      "path": "verification/fixture-provenance-r1/acceptance-data-graphs-r2.py",
+      "sha256": "d13a998bcb2f0dc2d5fca44888399114563637e42e2223c95e64383b79eb97f3"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\fixture-provenance-r1\\acceptance-data-graphs-r3.py",
+      "path": "verification/fixture-provenance-r1/acceptance-data-graphs-r3.py",
+      "sha256": "c86917f6305ff56200fbb3154bd852aea2ce891c8f79fecb18d9f864e7c3d7e1"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\fixture-provenance-r1\\initial-tags.py",
+      "path": "verification/fixture-provenance-r1/initial-tags.py",
+      "sha256": "ebb28e2a3f2256faad4d791cc48037b1268999fd7da5dc602e2cae2ca6f82d62"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\fixture-provenance-r1\\review.json",
+      "path": "verification/fixture-provenance-r1/review.json",
+      "sha256": "fbe1afffc40dc0149df82bd01a152727ace4efc1b2679915c565902c0865fc55"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\demo-command.json",
+      "path": "verification/native-context-r1/demo-command.json",
+      "sha256": "e71ee3b38b3014ed2e387ccc942db568301ebb1317f0aafa9d81e401db9eb9d8"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\demo.stderr.log",
+      "path": "verification/native-context-r1/demo.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\demo.stdout.log",
+      "path": "verification/native-context-r1/demo.stdout.log",
+      "sha256": "934a0d6d4a51de98a686886688cc8a65fd550287ac5d1530bb7505cae9bf4aa9"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\demo_context.py",
+      "path": "verification/native-context-r1/demo_context.py",
+      "sha256": "acd05a09a664557f6677ddbfc5586fa2bc18ad5b40506cd213370d386e61ef35"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\results.xml",
+      "path": "verification/native-context-r1/results.xml",
+      "sha256": "bb070a2f406f1eef79cc2109f4199d0030a7304dc782f4ec9c08cdc7f95ac7cf"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\test_native_context.py",
+      "path": "verification/native-context-r1/test_native_context.py",
+      "sha256": "c8323981a79456b9f540c516d3612026ffe246dccf08f90f2234c55052fed84b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\tests-command.json",
+      "path": "verification/native-context-r1/tests-command.json",
+      "sha256": "b234c514cb02f3426ad8a4fb65792384a45ad4a69255484c824b765b67ec3ca4"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\tests.stderr.log",
+      "path": "verification/native-context-r1/tests.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\tests.stdout.log",
+      "path": "verification/native-context-r1/tests.stdout.log",
+      "sha256": "3f8e51b071fae271a2ac992448257d994a03890e8208ece913bb73fe59de8467"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\command-command.json",
+      "path": "verification/product-demo-r1/command-command.json",
+      "sha256": "5178af64afba0fc7e9da86dee40501acbb0f2b29e6a64978e4d895de0366a927"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\command.stderr.log",
+      "path": "verification/product-demo-r1/command.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\command.stdout.log",
+      "path": "verification/product-demo-r1/command.stdout.log",
+      "sha256": "cbe8a5d9b148afaf5fc9e98856b694600396947f0402a5e06609cd1e20cd1f9b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\demo_data_graphs.py",
+      "path": "verification/product-demo-r1/demo_data_graphs.py",
+      "sha256": "758cdbd7a88c8fac123f5e6e37a75ba80e706388d630d2835d8cf011a5c2822e"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\recorded-runtime-r1\\actual-commands.json",
+      "path": "verification/recorded-runtime-r1/actual-commands.json",
+      "sha256": "8731eabfb4a86af28e8a44295717144d2bccc644f97b7eede5bf82418be8d84d"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\recorded-runtime-r1\\context-output.log",
+      "path": "verification/recorded-runtime-r1/context-output.log",
+      "sha256": "934a0d6d4a51de98a686886688cc8a65fd550287ac5d1530bb7505cae9bf4aa9"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\recorded-runtime-r1\\load-output.log",
+      "path": "verification/recorded-runtime-r1/load-output.log",
+      "sha256": "cbe8a5d9b148afaf5fc9e98856b694600396947f0402a5e06609cd1e20cd1f9b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\recorded-runtime-r1\\regression-output.log",
+      "path": "verification/recorded-runtime-r1/regression-output.log",
+      "sha256": "8c52b05604e7bf0858aa0cf166db5598ea2c13020ca9130d897f56d9f48179fb"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\recorded-runtime-r1\\spec.json",
+      "path": "verification/recorded-runtime-r1/spec.json",
+      "sha256": "29bdcea09e49341de492e5216bf97063a18a1b536309bba180f5d31b57703f9a"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\reproduction-notes.md",
+      "path": "verification/reproduction-notes.md",
+      "sha256": "7120af09c24d53b750773aaa401a15f2d96a7ecfeb561b9e003aaf42bf03496b"
+    },
+    {
+      "source": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\run-provenance-r1\\engineering-fault-review.json",
+      "path": "verification/run-provenance-r1/engineering-fault-review.json",
+      "sha256": "317474f173918408e5d8ba67b04daaf36681752c1ac47e4d8b6983733255f4b4"
+    }
+  ],
+  "reproduction_readme": "本目录是冻结产物的独立验收原件。实际环境：Windows，Python 3.14.3，未容器化，不依赖运行期外部服务。完整依赖及真实模块路径见 environment-reviewed.json。\n\n先安装记录中的同版 Python，检出冻结产物提交并建立虚拟环境；根据实际依赖记录安装测试依赖，按 verification/reproduction-notes.md 的本题步骤配置。需要插件入口的项目（如 Bandit）在检出目录用 python -m pip install -e . 注册；纯 Python 源码入口直接按已记录 PYTHONPATH 加载。PYTHONPATH 指向检出目录、src 和 lib。各 verification 子目录保留实际 argv、原始输出、JUnit、退出码和用例。命令 JSON 中的原机绝对路径需替换为本次检出位置及相应子目录；测试断言不改。\n\n模型原轨中的测试与本目录独立验收分开记录。原生 JSONL 和75秒连续运行录像各自只有一个，保存在对应飞书附件字段，此处不另放轨迹。工程/夹具问题按 evidence-map.json 限定归因；测试通过不等于一般性安全证明。",
+  "no_model_source_edits": true,
+  "native_trace_included": false
+}

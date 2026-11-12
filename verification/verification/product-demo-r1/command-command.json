@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+    "-B",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\demo_data_graphs.py"
+  ],
+  "cwd": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact",
+  "PYTHONPATH": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\src;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\lib",
+  "exit_code": 0,
+  "seconds": 1.13
+}

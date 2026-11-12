@@ -1,0 +1,8 @@
+{
+  "status": "FIXTURE_CONTRACT_CORRECTION_BEFORE_EVALUATION",
+  "reason": "py/unknown is not a reserved tag in initial tags.py; prompt explicitly preserves nonreserved business keys. Rejecting every py/ prefix would overconstrain the contract. Remove this rejection and add a preservation check. Existing declared object tags and encoded-key cases remain rejected.",
+  "original_fixture_sha256": "d13a998bcb2f0dc2d5fca44888399114563637e42e2223c95e64383b79eb97f3",
+  "corrected_fixture_sha256": "c86917f6305ff56200fbb3154bd852aea2ce891c8f79fecb18d9f864e7c3d7e1",
+  "model_source_edited": false,
+  "scored_results_changed": false
+}

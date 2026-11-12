@@ -1,0 +1,42 @@
+{
+  "time": "2026-11-12T18:13:11+08:00",
+  "run_id": "uf-20261112-sec-data-graphs-retry-1",
+  "checks": {
+    "acceptance": {
+      "tests": 5,
+      "passed": 2,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0,
+      "failure_cases": [
+        "test_decode_data_only_cannot_be_disabled_by_legacy_context[payload0]",
+        "test_decode_data_only_cannot_be_disabled_by_legacy_context[payload1]",
+        "test_direct_data_only_restore_accepts_only_documented_json_shapes[value0]"
+      ],
+      "exit_code": 1,
+      "xfailed": 0,
+      "xpassed": 0,
+      "pytest_terminal_summary": {
+        "failed": 3,
+        "passed": 2
+      },
+      "junit_raw_counts": {
+        "tests": 5,
+        "passed": 2,
+        "failures": 3,
+        "errors": 0,
+        "skipped": 0,
+        "failure_cases": [
+          "test_decode_data_only_cannot_be_disabled_by_legacy_context[payload0]",
+          "test_decode_data_only_cannot_be_disabled_by_legacy_context[payload1]",
+          "test_direct_data_only_restore_accepts_only_documented_json_shapes[value0]"
+        ],
+        "exit_code": 1
+      },
+      "count_source": "pytest terminal summary; XML kept unchanged"
+    }
+  },
+  "artifact_hashes_unchanged": true,
+  "score": null,
+  "feedback": "PENDING_SEMANTIC_REVIEW"
+}

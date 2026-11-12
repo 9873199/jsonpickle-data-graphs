@@ -1,0 +1,199 @@
+{
+  "time": "2026-11-12T18:21:49+08:00",
+  "uid": 1734,
+  "frozen_commit": "bfe379b1c7679626fac0cf675d69b5395a8f88a7",
+  "native_trajectory_sha256": "6a2621489a60935be3952cf7574c3144e91cffae9009200ec12acbf22e431059",
+  "private_reasoning_used": false,
+  "reviewer": "Codex primary agent, AI-assisted",
+  "score": 3,
+  "score_rationale": "默认入口的图恢复、标记拒绝、引用错误处理和旧行为均可运行，相关409项通过；但公开decode/loads与普通旧context组合会完全绕过显式安全模式，真实触发类还原钩子，另有直接restore接受tuple的类型遗漏。需要修改入口和校验后才能按宣称安全接入，建议3分；不按通过比例映射，不将同根因反例重复扣分，工程故障和过严夹具不计能力缺陷。",
+  "requirements": [
+    {
+      "requirement": "decode/loads和Unpickler新增opt-in模式，默认行为兼容",
+      "status": "PARTIAL_CONTEXT_BYPASS",
+      "source": "jsonpickle/unpickler.py:52,170,411,473; jsonpickle/__init__.py loads alias",
+      "evidence": [
+        "verification/acceptance-r1/test-results.json",
+        "verification/final-subset-r1/command-command.json",
+        "verification/native-context-r1/tests-command.json"
+      ],
+      "failure": "context or Unpickler(...)仅向新建context传data_only，传入普通旧Unpickler时显式data_only=True被忽略。decode与loads同一入口，同根因。"
+    },
+    {
+      "requirement": "只恢复JSON标量、普通list、字符串键dict和py/id引用",
+      "status": "PARTIAL_DIRECT_INPUT_TYPE_GAP",
+      "source": "jsonpickle/unpickler.py:532,570,593",
+      "evidence": [
+        "verification/contexts-r1/test-results.json"
+      ],
+      "failure": "直接Unpickler(data_only=True).restore((1,2))原样返回tuple；验证器仅遍历dict/list，构建器对其余类型直接return obj。非字符串dict键正常拒绝。"
+    },
+    {
+      "requirement": "共享字典、list/dict自引用互引用、混合图沿既有遍历编号恢复",
+      "status": "PASS_FOR_TESTED_CASES",
+      "source": "jsonpickle/unpickler.py:570,595,625",
+      "tests": [
+        "test_shared_dictionary_identity_preserved",
+        "test_list_self_cycle",
+        "test_dictionary_self_cycle",
+        "test_mutual_list_dictionary_cycle",
+        "test_mixed_topology_retains_legacy_reference_numbering"
+      ],
+      "evidence": [
+        "verification/acceptance-r1/test-results.json",
+        "verification/product-demo-r1/command-command.json"
+      ]
+    },
+    {
+      "requirement": "负数、bool、非法类型、越界及无目标引用应明确ValueError",
+      "status": "PASS_FOR_TESTED_CASES",
+      "source": "jsonpickle/unpickler.py:595,615",
+      "evidence": [
+        "verification/acceptance-r1/test-results.json",
+        "verification/contexts-r1/test-results.json"
+      ],
+      "note": "包含root py/id0无容器、浮点1.0、True/False等。"
+    },
+    {
+      "requirement": "已定义其他py/标记、嵌套及json://键绕过在对象还原前拒绝；业务键保留",
+      "status": "PASS_DEFAULT_CONTEXT_BUT_FAIL_LEGACY_CONTEXT",
+      "source": "jsonpickle/unpickler.py:20,532; decode:170",
+      "evidence": [
+        "verification/acceptance-r1/test-results.json",
+        "verification/native-context-r1/tests.stdout.log",
+        "verification/native-context-r1/demo.stdout.log"
+      ],
+      "failure": "默认context拒绝且无副作用；旧context用classes映射无害Counted后，__new__和__setstate__确实运行并返回对象。没有执行shell、访问服务或破坏行为。"
+    },
+    {
+      "requirement": "不通过classes/handlers或旧对象分支先恢复再拒绝",
+      "status": "FAIL_WITH_CALLER_PROVIDED_LEGACY_CONTEXT",
+      "source": "jsonpickle/unpickler.py:170,181,473,482",
+      "evidence": [
+        "verification/contexts-r1/acceptance.log",
+        "verification/native-context-r1/tests.stdout.log"
+      ],
+      "same_root_cause": "py/object与py/reduce探针、decode与loads和真实Counted副作用是同一context未传开关缺陷，不重复扣分。"
+    },
+    {
+      "requirement": "副作用记录测试、循环共享测试和格式文档",
+      "status": "IMPLEMENTED_WITH_ENTRY_COVERAGE_GAP",
+      "source": "tests/data_only_test.py:368,464; README.rst; docs/api.rst; CHANGES.rst",
+      "note": "新增72例包括副作用正负对照；自带预建context只覆盖Unpickler(data_only=True)，未覆盖普通旧context加decode(data_only=True)。相关409项独立重放通过，不能抵消安全反例。"
+    }
+  ],
+  "observable_process": [
+    {
+      "native_lines": [
+        65,
+        66,
+        67,
+        141,
+        142
+      ],
+      "observation": "先用真实encoder核对共享/循环图的py/id顺序，再实现独立数据恢复路径。"
+    },
+    {
+      "native_lines": [
+        149,
+        152,
+        153,
+        168,
+        169,
+        177,
+        178
+      ],
+      "observation": "发现B64/B85不在RESERVED后补全已定义标记，并保留非保留业务键。"
+    },
+    {
+      "native_lines": [
+        182,
+        185,
+        188,
+        189
+      ],
+      "observation": "首次handler探测缺flatten报错后修正；安全探测覆盖默认context及已启用data_only的context，没有覆盖普通旧context。"
+    },
+    {
+      "native_lines": [
+        207,
+        210,
+        214,
+        215,
+        219,
+        220
+      ],
+      "observation": "对比干净起点的时区和Decimal测试失败，原轨报告相同3失败；独立评分不把这些环境/范围错误扣作新缺陷。"
+    },
+    {
+      "native_lines": [
+        241,
+        248,
+        252,
+        256,
+        260,
+        265
+      ],
+      "observation": "修正json.loads传dict和局部类不可导入两处自带夹具错误后66通过；没有证据据此认定安全失败已被发现。"
+    },
+    {
+      "native_lines": [
+        376,
+        383,
+        394,
+        395,
+        398
+      ],
+      "observation": "扩大循环用例后72通过、相关409通过；最终回答称fail-closed且不会触发类钩子，普通旧context组合未满足这个断言。"
+    }
+  ],
+  "independent_checks": [
+    {
+      "path": "verification/acceptance-r1/test-results.json",
+      "result": "215 regression passed; 42 independent passed"
+    },
+    {
+      "path": "verification/contexts-r1/test-results.json",
+      "result": "2 passed,3 failed",
+      "attribution": "两条旧context对象/还原分支失败同根因；tuple输入返回是另一契约遗漏。"
+    },
+    {
+      "path": "verification/native-context-r1/tests-command.json",
+      "result": "2 passed,2 failed",
+      "attribution": "无monkeypatch：默认context拒绝，普通旧context在decode/loads都实际调用无害类钩子。"
+    },
+    {
+      "path": "verification/native-context-r1/demo-command.json",
+      "result": "exit1; Counted.__new__ and __setstate__ ran; tuple returned"
+    },
+    {
+      "path": "verification/final-subset-r1/command-command.json",
+      "result": "exit0;409 passed including72 new and doctests; not whole optional-extension suite"
+    },
+    {
+      "path": "verification/product-demo-r1/command-command.json",
+      "result": "exit0;6 actual graph/default checks"
+    },
+    {
+      "path": "verification/recorded-runtime-r1/actual-commands.json",
+      "result": "exit[0,0,1];all within74.92s"
+    },
+    {
+      "path": "verification/fixture-provenance-r1/review.json",
+      "result": "Pre-evaluation correction: py/unknown is ordinary nonreserved business key; old fixture preserved, never scored"
+    },
+    {
+      "path": "verification/run-provenance-r1/engineering-fault-review.json",
+      "result": "Original first-request HTTP400, no tool actions, score null; one same-config new-session engineering retry"
+    }
+  ],
+  "scope_limits": [
+    "已复核399行原轨的204个可观察事件及最终diff/新增测试，未使用private thinking。",
+    "相关409回归不是包含所有可选扩展的全套；原轨中时区/Decimal旧错误不计新缺陷。",
+    "原始协议失败单独留cache，不评分，不混入有效单轮附件。",
+    "副作用验证只调用无害计数类，无网络与命令执行。",
+    "context多个表现同根因不重复扣分。"
+  ],
+  "original_product_edited": false,
+  "engineering_failures_scored": false
+}

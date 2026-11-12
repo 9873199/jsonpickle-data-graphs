@@ -1,0 +1,17 @@
+Data Graph Reader
+
+Stored JSON graph: {"left": [{"value": [1, true, null]}], "right": {"py/id": 2}, "self": {"py/id": 0}}
+Shared dictionary identity: True
+Self reference: True
+
+Object marker: {"nested": {"py/object": "builtins.str"}}
+Rejected: data_only decoding does not support the reserved tag 'py/object'; only 'py/id' references are allowed
+
+Boolean reference number: [{"py/id": true}]
+Rejected: invalid 'py/id' reference: expected a non-negative integer, got bool (True)
+
+Out-of-range reference: [{"py/id": 999}]
+Rejected: invalid 'py/id' reference: index 999 is out of range; only 1 list/dict containers are referenceable
+
+Default tuple compatibility: (1, 2)
+{"checks": 6, "passed": 6, "source": "actual library calls; separate verification helper"}

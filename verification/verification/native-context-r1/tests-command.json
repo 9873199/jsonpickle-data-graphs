@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-s",
+    "-p",
+    "no:cacheprovider",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\test_native_context.py",
+    "--basetemp",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\tmp-test",
+    "--junitxml",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\results.xml"
+  ],
+  "cwd": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact",
+  "PYTHONPATH": "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\src;D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\lib",
+  "exit_code": 1,
+  "seconds": 2.76
+}

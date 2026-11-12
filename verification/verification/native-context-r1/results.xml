@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="4" time="0.372" timestamp="2026-11-12T18:16:23.089380+08:00" hostname="DESKTOP-BPAMAV8"><testcase classname="verification.native-context-r1.test_native_context" name="test_real_class_hooks_are_not_called[False-decode0]" time="0.001" /><testcase classname="verification.native-context-r1.test_native_context" name="test_real_class_hooks_are_not_called[False-decode1]" time="0.001" /><testcase classname="verification.native-context-r1.test_native_context" name="test_real_class_hooks_are_not_called[True-decode0]" time="0.001"><failure message="assert (False)">entry = &lt;function decode at 0x00000157FADCD2D0&gt;, legacy_context = True
+
+    @pytest.mark.parametrize('entry',[jsonpickle.decode,jsonpickle.loads])
+    @pytest.mark.parametrize('legacy_context',[False,True])
+    def test_real_class_hooks_are_not_called(entry,legacy_context):
+     Counted.events=[]
+     payload=json.dumps({'py/object':'harmless.Counted','py/state':{'value':7}})
+     kwargs={'data_only':True,'classes':{'harmless.Counted':Counted}}
+     if legacy_context:kwargs['context']=Unpickler()
+     rejected=False
+     try:
+      result=entry(payload,**kwargs)
+      print('RESULT',type(result).__name__,'EVENTS',Counted.events)
+     except ValueError:
+      rejected=True;print('REJECTED','EVENTS',Counted.events)
+&gt;    assert rejected and Counted.events==[]
+E    assert (False)
+
+..\verification\native-context-r1\test_native_context.py:20: AssertionError</failure></testcase><testcase classname="verification.native-context-r1.test_native_context" name="test_real_class_hooks_are_not_called[True-decode1]" time="0.001"><failure message="assert (False)">entry = &lt;function decode at 0x00000157FADCD2D0&gt;, legacy_context = True
+
+    @pytest.mark.parametrize('entry',[jsonpickle.decode,jsonpickle.loads])
+    @pytest.mark.parametrize('legacy_context',[False,True])
+    def test_real_class_hooks_are_not_called(entry,legacy_context):
+     Counted.events=[]
+     payload=json.dumps({'py/object':'harmless.Counted','py/state':{'value':7}})
+     kwargs={'data_only':True,'classes':{'harmless.Counted':Counted}}
+     if legacy_context:kwargs['context']=Unpickler()
+     rejected=False
+     try:
+      result=entry(payload,**kwargs)
+      print('RESULT',type(result).__name__,'EVENTS',Counted.events)
+     except ValueError:
+      rejected=True;print('REJECTED','EVENTS',Counted.events)
+&gt;    assert rejected and Counted.events==[]
+E    assert (False)
+
+..\verification\native-context-r1\test_native_context.py:20: AssertionError</failure></testcase></testsuite></testsuites>

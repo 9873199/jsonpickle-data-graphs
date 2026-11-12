@@ -1,0 +1,12 @@
+Data reader context checks - separate verification helper
+Input: {"py/object": "harmless.Counted", "py/state": {"value": 7}}
+
+Default context
+Rejected: data_only decoding does not support the reserved tag 'py/object'; only 'py/id' references are allowed
+Harmless restoration hooks: []
+
+Existing ordinary context
+Restored type: Counted
+Harmless restoration hooks: ['__new__', '__setstate__']
+
+Direct restore tuple result: (1, 2)

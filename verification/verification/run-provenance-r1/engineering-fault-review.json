@@ -1,0 +1,19 @@
+{
+  "time": "2026-11-12T17:38:28+08:00",
+  "run_id": "uf-20261112-sec-data-graphs",
+  "status": "ENGINEERING_INVALID",
+  "category": "protocol",
+  "reviewer": "Codex primary agent, AI-assisted",
+  "score": null,
+  "failure": "First request HTTP400: unsupported context_management for Responses upstream; no tool actions and empty model usage.",
+  "evidence_files": [
+    "D:\\hc\\userFeedback\\cache\\runs\\uf-20261112-sec-data-graphs\\end.json",
+    "D:\\hc\\userFeedback\\cache\\runs\\uf-20261112-sec-data-graphs\\frozen\\evidence-index.json",
+    "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs\\model-final-answer.txt",
+    "D:\\hc\\userFeedback\\cache\\probes\\relay-20261112-173627-shell\\summary.json"
+  ],
+  "configuration_unchanged": true,
+  "clean_original_start_verified": true,
+  "recovery_probe_passed": true,
+  "original_trace_retained": true
+}

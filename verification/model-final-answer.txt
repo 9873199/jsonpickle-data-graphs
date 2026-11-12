@@ -1,0 +1,16 @@
+All 409 tests pass and the working tree contains exactly the intended changes. The work is complete.
+
+## What was added
+
+A fail-closed `data_only=True` mode for decoding untrusted jsonpickle, wired into all three public entry points (`jsonpickle.decode`, `jsonpickle.loads`, and `Unpickler`). Defaults to `False`, so existing behavior is byte-for-byte unchanged.
+
+**`jsonpickle/unpickler.py`** — a separate three-phase restoration path that never touches the existing object machinery:
+1. **Validation first** — the whole parsed graph is walked and any defined protocol marker other than `py/id` raises `DataOnlyDecodeError` (a `ValueError`) *before a single container is built*. This covers `py/object`, `py/type`, `py/function`, `py/reduce`, `py/repr`, `py/mod`, `py/state`, `py/newargs`, plus `py/b64`/`py/b85` (which aren't in `tags.RESERVED` and had to be enumerated explicitly), markers nested in containers, and `json://`-encoded keys. No class import, handler call, `eval()`, or `__setstate__` hook can run first.
+2. **Build** — only JSON scalars, plain `list`s and string-keyed `dict`s are created, registered in the same traversal order as the standard unpickler so `py/id` numbering matches the pickler exactly (verified against real encoder output for shared, self, and mutual references).
+3. **Finalize** — forward-reference placeholders for cycles are swapped in; dangling references raise instead of becoming `None`. `True`/`False` (bool is an int subclass), floats, strings, `null`, negatives, and out-of-range ids all raise clear `ValueError`s. `classes`, registered handlers, and `on_missing` callbacks are unreachable in this mode. Ordinary business keys — including unrelated ones like `"py/name"` — are preserved verbatim.
+
+**`tests/data_only_test.py`** (72 tests) — including tests that record `__new__`/`__init__`/`__setstate__`/handler calls and assert the event log is empty under rejection, a no-import probe, an `eval()`-path probe with `safe=False`, `classes=`/`on_missing` bypass attempts, plus self-referential list/dict, mutual list↔dict and dict↔dict cycles, three-node cycles, shared dicts/lists, shared forward references, and every bad-id shape.
+
+**Docs** — the accepted data format is spelled out in `README.rst` (new security subsection), `docs/api.rst`, the `decode()` docstring, and `CHANGES.rst`; each explicitly states that `safe=True` only disables the legacy repr-`eval()` path and is not this protection.
+
+The only 3 failing tests in the environment (`zoneinfo` tzdata, a simplejson/Decimal ordering issue) fail identically on the clean checkout — zero regressions.

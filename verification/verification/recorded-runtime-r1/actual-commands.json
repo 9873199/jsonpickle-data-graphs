@@ -1,0 +1,47 @@
+[
+  {
+    "id": "load",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+      "-B",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\product-demo-r1\\demo_data_graphs.py"
+    ],
+    "exit_code": 0,
+    "finished_at_seconds": 3.45
+  },
+  {
+    "id": "regression",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\data_only_test.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\jsonpickle_test.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\object_test.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\handler_test.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\collections_test.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\tests\\util_test.py",
+      "--doctest-modules",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\jsonpickle\\unpickler.py",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\frozen-artifact\\jsonpickle\\__init__.py",
+      "--basetemp",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\recording\\r1\\tmp-regression"
+    ],
+    "exit_code": 0,
+    "finished_at_seconds": 26.3
+  },
+  {
+    "id": "context",
+    "argv": [
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\tasks\\data-graphs\\env\\Scripts\\python.exe",
+      "-B",
+      "D:\\hc\\userFeedback\\cache\\execution-security-next10-20261112\\evaluation\\uf-20261112-sec-data-graphs-retry-1\\verification\\native-context-r1\\demo_context.py"
+    ],
+    "exit_code": 1,
+    "finished_at_seconds": 49.41
+  }
+]
